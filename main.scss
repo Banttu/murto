@@ -16,7 +16,7 @@
 
 /* Pixels */
 @include between(650px, 900px) {
-  .below-using-pixels {
+  .between-using-pixels {
     background-color: #aaa;
   }
 }

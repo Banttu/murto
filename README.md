@@ -65,6 +65,7 @@ Measures work exactly like in [Rupture](https://github.com/jescalan/rupture). A 
 }
 ```
 ```
+/* Scale name */
 @include below(l) {
   .below-using-scale-name {
     background-color: #eee;
@@ -81,14 +82,14 @@ Measures work exactly like in [Rupture](https://github.com/jescalan/rupture). A 
 ```
 /* Pixels */
 @include between(650px, 900px) {
-  .below-using-pixels {
+  .between-using-pixels {
     background-color: #aaa;
   }
 }
 
 // Compiles to
 @media only screen and (min-width: 650px) and (max-width: 900px) {
-  .below-using-pixels {
+  .between-using-pixels {
     background-color: #aaa;
   }
 }
