@@ -1,0 +1,36 @@
+@import './murto.scss';
+
+/* Slice number */
+@include above(4) {
+  .above-using-slice-number {
+    background-color: #fff;
+  }
+}
+
+/* Scale name */
+@include below(l) {
+  .below-using-scale-name {
+    background-color: #eee;
+  }
+}
+
+/* Pixels */
+@include between(650px, 900px) {
+  .below-using-pixels {
+    background-color: #aaa;
+  }
+}
+
+/* Slice number */
+@include at(4) {
+  .at-using-slice-number {
+    background-color: #aaa;
+  }
+}
+
+/* Scale name */
+@include at(xl) {
+  .at-using-scale-name {
+    background-color: #aaa;
+  }
+}

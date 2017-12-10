@@ -1,0 +1,120 @@
+$murto: (
+  scale: 0 576px 768px 992px 1200px 1800px,
+  scale-names: 'xs' 's' 'm' 'l' 'xl' 'xxl'
+) !default;
+
+@function is-string($value) {
+  @if type-of($value) == string {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@function get-scale-index-by-string($scale-name) {
+  $scale-names: map-get($murto, 'scale-names');
+  $scale-index: index($scale-names, $scale-name);
+  @if $scale-index != null {
+    @return $scale-index;
+  } @else {
+    @return false;
+  }
+}
+
+@function get-scale-index-pair($measure) {
+  $scale-list: map-get($murto, 'scale');
+  $min: null;
+  $max: null;
+
+  @if is-string($measure) {
+    $min-index: get-scale-index-by-string($measure);
+    @if $min-index >= 1 and $min-index < length($scale-list) {
+      $min: nth($scale-list, $min-index);
+      $max: nth($scale-list, $min-index + 1);
+    } @else {
+      $min: nth($scale-list, $min-index);
+    }
+  } @else {
+    @if on-scale($measure) and $measure >= 1 and $measure < length($scale-list) {
+      $min: nth($scale-list, $measure);
+      $max: nth($scale-list, $measure + 1);
+    } @else {
+      $min: nth($scale-list, $measure);
+    }
+  }
+
+  @return (
+    min: $min,
+    max: $max
+  );
+}
+
+@function on-scale($n) {
+  $scale-list: map-get($murto, 'scale');
+  @if type-of($n) == number and unit($n) == '' and $n >= 1 and $n <= length($scale-list) {
+    @return true;
+  } @else {
+    @return false;
+  }
+}
+
+@mixin between($min, $max) {
+  $scale-list: map-get($murto, 'scale');
+
+  @if is-string($min) {
+    $min: nth($scale-list, get-scale-index-by-string($min));
+  }
+
+  @if is-string($max) {
+    $max: nth($scale-list, get-scale-index-by-string($max));
+  }
+
+  @if on-scale($min) {
+    $min: nth($scale-list, $min);
+  }
+
+  @if on-scale($max) {
+    $max: nth($scale-list, $max + 1);
+  }
+
+  @include media-factory($min, $max) {
+    @content;
+  }
+}
+
+@mixin above($measure) {
+  @include between($measure, null) {
+    @content;
+  }
+}
+
+@mixin below($measure) {
+  @include between(1, $measure) {
+    @content;
+  }
+}
+
+@mixin at($measure) {
+  $min-max-map: get-scale-index-pair($measure);
+  $min: map-get($min-max-map, 'min');
+  $max: map-get($min-max-map, 'max');
+  @include media-factory($min, $max) {
+    @content;
+  }
+}
+
+@mixin media-factory($min, $max) {
+  $condition: 'only screen';
+
+  @if $min != 0 {
+    $condition: $condition + ' and (min-width: #{$min})';
+  }
+
+  @if $max {
+    $condition: $condition + ' and (max-width: #{$max})';
+  }
+
+  @media #{$condition} {
+    @content;
+  }
+}
