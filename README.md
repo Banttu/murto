@@ -1,11 +1,12 @@
 # Murto
+[![Murto on NPM](https://img.shields.io/npm/v/murto.svg?style=flat-square)](https://www.npmjs.com/package/murto) [![Murto Downloads on NPM](https://img.shields.io/npm/dm/murto.svg?style=flat-square)](https://www.npmjs.com/package/murto)
 > Simple media queries for Sass
 
 Murto is heavily influenced by [Rupture](https://github.com/jescalan/rupture) and [Breakpoint Slicer](https://github.com/lolmaus/breakpoint-slicer).
 
 ## Install
 ```
-$npm install murto
+$ npm install murto
 ```
 
 ## Import
@@ -16,12 +17,13 @@ $npm install murto
 ## Settings (optional)
 For a custom setup you need to have a scale name for each scale.
 ```
-@import '~murto/murto'
+@import '~murto/murto';
+
 /* These are the default values */
-$murto(
+$murto: (
   scale: 0 576px 768px 992px 1200px 1800px,
   scale-names: 'xs' 's' 'm' 'l' 'xl' 'xxl'
-)
+);
 ```
 ```
 scale:            0        576px       768px       992px       1200px      1800px
@@ -45,7 +47,7 @@ Screen sizes **between** the two measures will include the style block.
 Screen sizes the measure will include the style block.
 
 ## Measure
-Measures work exactly like in [Rupture](https://github.com/jescalan/rupture). A measure can be a **slice number** (1-6), **scale name** (eg. 'lg') or a **pixel value** (100px). The scale in Murto starts at 1 like list indexes in Sass.
+Measures work exactly like in [Rupture](https://github.com/jescalan/rupture). A measure can be a **slice number**, **scale name** (eg. 'lg') or a **pixel value** (100px). The slices in Murto start at 1 like list indexes in Sass.
 
 ## Use
 **above**, **below** and **between** take same type of arguments:
